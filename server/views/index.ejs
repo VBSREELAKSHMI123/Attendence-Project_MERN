@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>USER LIST</h1>
+    <ul>
+        <% users.forEach(user => { %>
+            <li><%= user.name %></li>
+            <li><%= user.email %></li>
+            <li><%= user.designation %></li>
+            <li><%= user.department %></li>
+            <li><%= user.phone %></li>
+            <li><%= user.password %></li>
+            <li><%= user.role %></li>
+        <% }) %>
+    </ul>
+    
+</body>
+</html>
