@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 const { adminmodel } = require("../models/admin")
-const fs = require("fs")
-const path = require("path")
-const router = require("../routes/Admin")
+const dotenv = require("dotenv");
+dotenv.config({path: "./config.env"});
+const {SECRET_KEY} = process.env
+
 
 
 const generateHashedPassword = async (password) => {
@@ -37,9 +38,7 @@ const handleAddUser = async (req, res) => {
 // USER LOGIN
 const handleUserLogin = async (req,res)=>{
     try {
-        const { email, password } = req.body; // Extract email & password
-
-        // Check if the user exists (Admin or User)
+        const { email, password } = req.body; 
         const user = await adminmodel.findOne({ email: email, role: { $in: ["admin", "user"] } });
 
         if (!user) {
@@ -50,23 +49,18 @@ const handleUserLogin = async (req,res)=>{
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
-
-       
         const token = jwt.sign(
             { user_id: user._id, user_role: user.role },
-            "attend-app", 
+            SECRET_KEY, 
             { expiresIn: "1d" }
         );
-
         res.status(200).json({
             status: "success",
             token,
             user_role: user.role,
                 user_id: user._id,
                 user_name: user.name,
-                user_email: user.email,
-               
-            
+                user_email: user.email,  
         });
 
     } catch (error) {
@@ -75,15 +69,14 @@ const handleUserLogin = async (req,res)=>{
     }
 }
 
-
-const handleUserView = async (req,res)=>{
-    adminmodel.find().then(
-        (response)=>{
-            res.render("index",{users})
-        }
-    ).catch((error)=>{
-        res.json({"status":"error"})
-    })
+// VIEW USER
+const handleUserView = (req,res)=>{
+    adminmodel.find().then((response) => {
+      res.json(response);
+      console.log(response)
+    }).catch(() => {
+      res.json({ status: 'error' });
+    });
 }
 
 module.exports = { handleAddUser , handleUserLogin, handleUserView}
