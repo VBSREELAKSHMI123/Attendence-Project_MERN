@@ -47,7 +47,7 @@ const ForgotPassword = ({ setStep }: ForgotPasswordType) => {
                 <div className='flex flex-col gap-5'>
                     <h1 className='font-bold font-lexend text-2xl'>Forgot Password</h1>
                     <p>Enter your registered email address. we will send you a code to reset your password.</p>
-                    <InputField label="Email Address" value={data.email} name='email' onChange={inputHandler} type="text" />
+                    <InputField label="Email Address" value={data.email} name='email' onChange={inputHandler} type="text" isLogin/>
                     <CustomButton onClick={handleStep} >Send OTP</CustomButton>
                 </div>
             </div>

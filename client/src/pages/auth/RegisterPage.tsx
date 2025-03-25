@@ -57,10 +57,10 @@ const RegisterPage = () => {
                             <h2 className='font-bold text-xl font-lexend'>Welcome 👋</h2>
                             <p className='font-lexend'>Please enter your details to create account on HR Flow</p>
                         </div>
-                        <InputField label="user name" value={data?.name} name='name' onChange={inputHandler} type="text" />
-                        <InputField label="email" value={data.email} name='email' onChange={inputHandler} type="text" />
-                        <InputField label="role" value={data.role} name='role' onChange={inputHandler} type="text" />
-                        <InputField label="password" value={data.password} name='password' onChange={inputHandler} type="password"  />
+                        <InputField label="user name" value={data?.name} name='name' onChange={inputHandler} type="text" isLogin/>
+                        <InputField label="email" value={data.email} name='email' onChange={inputHandler} type="text" isLogin/>
+                        <InputField label="role" value={data.role} name='role' onChange={inputHandler} type="text" isLogin/>
+                        <InputField label="password" value={data.password} name='password' onChange={inputHandler} type="password"  isLogin/>
                         <p><FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" /></p>
                        <LoginButton onClick={readValue}>Register</LoginButton>
                     </div>

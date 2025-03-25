@@ -54,6 +54,23 @@ const handleDeleteEmp = async (req,res)=>{
     }
 }
 
+// SEARCH AND FILTER
+const handleSearchEmp = async (req,res)=>{
+      try{
+           const filters = req.query
+           let query = {}
+           for (let key in filters) {
+               query[key]= {$regex:filters[key],$options:'i'}
+           }
+
+           filteremp = await employeemodel.find(query)
+           res.json(filteremp)
+      }
+      catch(error) {
+        res.status(500).json({ status: "error", message: "Server Error" });
+    }
+}
 
 
-module.exports={handleAddEmp,handleViewEmp,handleUpdateEmp,handleDeleteEmp}
+
+module.exports={handleAddEmp,handleViewEmp,handleUpdateEmp,handleDeleteEmp,handleSearchEmp}

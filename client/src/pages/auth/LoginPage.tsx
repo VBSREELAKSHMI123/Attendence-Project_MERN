@@ -62,8 +62,8 @@ const LoginPage = () => {
                        <p>Please Login here</p>
                     </div>
                     {/* <div className='text-blue-800 font-bold mb-5 text-2xl'>Login Page</div> */}
-                    <InputField label='username' name='email' value={data.email} type='text' onChange={inputHandler} />
-                    <InputField label='password' name='password' value={data.password} type='password' onChange={inputHandler} />
+                    <InputField label='username' name='email' value={data.email} type='text' onChange={inputHandler} isLogin />
+                    <InputField label='password' name='password' value={data.password} type='password' onChange={inputHandler} isLogin/>
                     <div className='flex items-center justify-between'>
                     <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
                     <button onClick={()=>navigate('/render')}>ForgotPassword?</button>

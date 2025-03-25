@@ -4,6 +4,8 @@ const {SECRET_KEY} = process.env
 const AuthenticationToken = (AllowedRoles)=>{
    return (req,res,next)=>{
     const authheader=req.headers['authorization']
+
+    // "Bearer rwyucdfwjhcfwfwghdfwghcfx"
     if (!authheader) {
         res.status(401).json({status:"error",message:"No token Found"})
     }
@@ -12,11 +14,12 @@ const AuthenticationToken = (AllowedRoles)=>{
         if (err) {
             res.status(403).json({status:"error",message:"Invalid Token"})
         }
-        if (decoded.role == !AllowedRoles) {
-            res.status(403).json({status:"error",message:"No permission"}) 
+        if (!AllowedRoles.includes(decoded.role)) { 
+            return res.status(403).json({ status: "error", message: "No permission" });
         }
         req.role=decoded
+        next();
     })
    }
-    
 }
+module.exports=AuthenticationToken;

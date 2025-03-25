@@ -1,14 +1,15 @@
 const express = require("express")
 const router = express.Router()
-const {handleAddUser , handleUserLogin, handleUserView}=require("../controllers/admin");
+const { handleAddUser, handleUserLogin, handleUserView } = require("../controllers/admin");
+const { verifyToken } = require("../middlewares/authMiddleware");
 
 
 // USER REGISTER
 router.post("/adduser", handleAddUser);
-  
+
 router.post("/login", handleUserLogin);
 
-router.get("/userview",handleUserView)
+router.get("/userview", verifyToken, handleUserView)
 
 module.exports = router;
 

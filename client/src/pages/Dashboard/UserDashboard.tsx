@@ -6,11 +6,13 @@ import { Outlet } from 'react-router-dom'
 const UserDashboard = () => {
   return (
     <div className=' flex w-full h-full'>
-    <div className='w-full h-screen flex m-5'>
+    <div className='w-full h-screen flex'>
       <SideMenu />
-      <div className='flex-1 m-4 rounded-lg'>
+      <div className='flex-1 my-4 mr-4 rounded-lg'>
        <Navbar children='Hello New User 👋🏻'/>
+       <div className='px-2 pt-4'>
        <Outlet />
+       </div>
       </div>
     </div>
     </div>

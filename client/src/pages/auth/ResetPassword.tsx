@@ -22,7 +22,9 @@ export const ResetPassword = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
- 
+ const readValue=()=>{
+
+ }
 
   return (
   
@@ -37,10 +39,10 @@ export const ResetPassword = () => {
            <h1 className='font-bold text-xl font-lexend'>Set A Password</h1>
             
           
-        <InputField label="Create Password" value={data.password} name='password' onChange={inputHandler} type="password"  />
-        <InputField label="Re-Enter Password" value={data.newpassword} name='newpassword' onChange={inputHandler} type="password"  />
+        <InputField label="Create Password" value={data.password} name='password' onChange={inputHandler} type="password" isLogin />
+        <InputField label="Re-Enter Password" value={data.newpassword} name='newpassword' onChange={inputHandler} type="password"  isLogin/>
 
-        <LoginButton>Set Password</LoginButton>
+        <LoginButton onClick={readValue}>Set Password</LoginButton>
         </div>
     </div>
 </div>

@@ -48,7 +48,7 @@ const navigate=useNavigate();
                 <div className='flex flex-col gap-5'>
                     <h1 className='font-bold font-lexend text-2xl'>Enter OTP</h1>
                     <p>We have share a code of your registered email address</p>
-                    <InputField label="Enter OTP" value={data.otp} name='otp' onChange={inputHandler} type="number" />
+                    <InputField label="Enter OTP" value={data.otp} name='otp' onChange={inputHandler} type="number" isLogin/>
                     <CustomButton onClick={handleStep} >Verify</CustomButton>
                 </div>
             </div>

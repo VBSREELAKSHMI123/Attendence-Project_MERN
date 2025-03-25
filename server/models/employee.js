@@ -25,6 +25,10 @@ const schema = mongoose.Schema({
     appletter:{ type:String , required:true },
     salaryslip:{ type:String , required:true },
     experience:{ type:String , required:true },
+    pemail:{ type:String , required:true },
+    reliving:{ type:String , required:true },
+    experience:{ type:String , required:true },
+    role:{ type:String , required:true },
     
 })
 

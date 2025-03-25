@@ -57,5 +57,19 @@ const handleVerifyLeave=async (req,res)=>{
     }
 }
 
+const handleDeleteLeave=async (req,res)=>{
+    try{
+    const {id}=req.params
+    const leave = await leavemodel.findByIdAndDelete(id)
+    if (!leave) {
+        res.status(401).json({status:"error",message:"Leave Not Found"})
+    }
+    res.status(200).json({status:"success",message:"Leave Deleted Successfully"})
 
-module.exports={handleAddLeave,handleViewLeave,handleViewEmpLeave,handleVerifyLeave}
+    }
+    catch (error){
+        console.error("Errod occured during deletion",error)
+    }
+}
+
+module.exports={handleAddLeave,handleViewLeave,handleViewEmpLeave,handleVerifyLeave,handleDeleteLeave}
