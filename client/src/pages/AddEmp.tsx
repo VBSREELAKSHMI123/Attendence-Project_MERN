@@ -79,13 +79,9 @@ const AddEmp = () => {
           <TabPanel value={PERSONAL}><PersonalInformation setTabValue={setTabValue} personalformValues={personalformValues} setpersonalFormValues={setpersonalFormValues} /></TabPanel>
           <TabPanel value={PROFESSIONAL}><ProfessionalInformation setTabValue={setTabValue} profformValues={profformValues} setprofformValues={setprofformValues}/></TabPanel>
           <TabPanel value={DOCUMENTS}><Documents docformValues={docformValues} setdocformValues={setdocformValues}/></TabPanel>
-
-
         </TabContext>
       </Box>
-
     </div>
   )
 }
-
 export default AddEmp

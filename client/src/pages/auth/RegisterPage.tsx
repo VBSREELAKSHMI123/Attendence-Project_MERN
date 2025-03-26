@@ -9,6 +9,7 @@ import onLoadIMage from '../../assets/images/attendence1.jpeg'
 import { Checkbox, FormControlLabel } from '@mui/material'
 import ImageStore from '../../components/ImageStore'
 import axios from 'axios'
+import { privateRequest } from '../../apis/requsetMethods'
 
 const RegisterPage = () => {
     const image=["src/assets/images/attendence1.jpeg","src/assets/images/attendence2.jpeg","src/assets/images/attendence3.jpeg","src/assets/images/attendence4.jpeg"]
@@ -27,20 +28,18 @@ const RegisterPage = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const readValue = () =>{
-        axios.post("http://localhost:8080/adduser",data).then(
-            response=>{
-                if (response.data.status==="success") {
-                    alert("Registered Successfully")
-                } else {
-                    alert("Registration Failed")
-                }
+    const readValue = async () =>{
+       try{
+            const response = await privateRequest.post("/adduser",data)
+            if (response.data.success) {
+                alert("Registered Successfully")
+            } else {
+                alert("Registration Failed")
             }
-        ).catch(error=>{
+            console.log(response)
+       }catch(error){
             console.error("Error",error)
         }
-            
-        )
     }
 
     return (

@@ -9,9 +9,10 @@ import LoginButton from '../../components/FormElemets/Buttons/LoginButton'
 import { Checkbox, FormControlLabel } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { publicRequest } from '../../apis/requsetMethods'
 
 const LoginPage = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [data, setData] = useState<TypeList>({
         email: "",
         password: "",
@@ -19,8 +20,8 @@ const LoginPage = () => {
         label: "",
         name: "",
         newpassword: "",
-        otp:"",
-        role:""
+        otp: "",
+        role: ""
 
     })
 
@@ -28,25 +29,43 @@ const LoginPage = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const readValue = () => {
-        axios.post("http://localhost:8080/login",data).then(
-            response=>{
-                if (response.data.status=="success") {
-                    sessionStorage.setItem("id",response.data.user_id)
-                    sessionStorage.setItem("token",response.data.token)
-                    sessionStorage.setItem("name",response.data.user_name)
-                    sessionStorage.setItem("email",response.data.user_email)
-                    sessionStorage.setItem("role",response.data.user_role)
-                    navigate('/user')
-                    alert("Successfully Logged in")
-                } else {
-                    alert("Login Failed")
-                }
+    const readValue = async () => {
+
+        try {
+            const res = await publicRequest.post("/login", data)
+            console.log(res);
+
+            if (res.data.success){
+                localStorage.setItem("token",res.data.token)
+                navigate('/')
+                alert(res.data.message)
             }
-        ).catch(error=>{
-            console.error("Error Occured",error)
-        })
+            console.log(res);
+
+        } catch (error: any) {
+            console.log("err", error.response.data.message || "some thing went wrong");
+        }
     }
+
+
+    //     axios.post("http://localhost:8080/login",data).then(
+    //         response=>{
+    //             if (response.data.success==true) {
+    //                 sessionStorage.setItem("id",response.data.user_id)
+    //                 sessionStorage.setItem("token",response.data.token)
+    //                 sessionStorage.setItem("name",response.data.user_name)
+    //                 sessionStorage.setItem("email",response.data.user_email)
+    //                 sessionStorage.setItem("role",response.data.user_role)
+    //                 navigate('/user')
+    //                 alert("Successfully Logged in")
+    //             } else {
+    //                 alert("Login Failed")
+    //             }
+    //         }
+    //     ).catch(error=>{
+    //         console.error("Error Occured",error)
+    //     })
+    // }
 
     return (
         <div className='flex h-screen p-[70px] gap-7'>
@@ -54,19 +73,19 @@ const LoginPage = () => {
                 <SideImage src={OnLoadImage} />
             </div>
             <div className='flex-1 px-20'>
-                
+
                 <div className='flex flex-col gap-5'>
-                <h1 className='text-blue-800 font-bold font-lexend'>HRFlow</h1>
+                    <h1 className='text-blue-800 font-bold font-lexend'>HRFlow</h1>
                     <div>
-                       <h2 className='text-xl font-bold font-lexend'>Welcome 👋</h2> 
-                       <p>Please Login here</p>
+                        <h2 className='text-xl font-bold font-lexend'>Welcome 👋</h2>
+                        <p>Please Login here</p>
                     </div>
                     {/* <div className='text-blue-800 font-bold mb-5 text-2xl'>Login Page</div> */}
                     <InputField label='username' name='email' value={data.email} type='text' onChange={inputHandler} isLogin />
-                    <InputField label='password' name='password' value={data.password} type='password' onChange={inputHandler} isLogin/>
+                    <InputField label='password' name='password' value={data.password} type='password' onChange={inputHandler} isLogin />
                     <div className='flex items-center justify-between'>
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
-                    <button onClick={()=>navigate('/render')}>ForgotPassword?</button>
+                        <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
+                        <button onClick={() => navigate('/render')}>ForgotPassword?</button>
                     </div>
                     <LoginButton onClick={readValue}>Login</LoginButton>
                 </div>

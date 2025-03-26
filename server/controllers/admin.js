@@ -40,7 +40,7 @@ const handleAddUser = async (req, res) => {
 // USER LOGIN
 const handleUserLogin = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password,role } = req.body;
         // const user = await adminmodel.findOne({ email: email, role: { $in: ["admin", "user"] } });
         const user = await adminmodel.findOne({ email: email });
         console.log("user", user);
@@ -55,13 +55,15 @@ const handleUserLogin = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password", success: false });
         }
         const token = jwt.sign(
-            { user_id: user._id, user_role: user.role },
+            { user_id: user._id, role: user.role },
             SECRET_KEY,
             { expiresIn: "1d" }
         );
+
         res.status(200).json({
             success: true,
             token,
+            role:user.role,
             message: "Login Successfully"
         });
 

@@ -3,13 +3,14 @@ const {attendencemodel} = require("../models/attendence")
 // ADD ATTENDENCE
 const handleAddAttendence = async (req,res)=>{
     try{
-    let {employee,timeout} = req.body
-    if (!employee) {
+    let { id } = req.params
+    let {timeout} = req.body
+    if (!id) {
         return res.status(400).json({status:"error",message:"Employee not found"})
     }
     if (timeout) {
         const attendence = await attendencemodel.findOneAndUpdate(
-            {employee,timeout:null},
+            {employee:id,timeout:null},
             {timeout:new Date()},
             {new:true}
         )
@@ -18,7 +19,7 @@ const handleAddAttendence = async (req,res)=>{
         }
         return res.json({status:"success",message:"Time-Out Recorded Successfully",attendence})
     } else {
-         const attendence = new attendencemodel({ employee,timein:new Date(),timeout:null })
+         const attendence = new attendencemodel({ employee:id,timein:new Date(),timeout:null })
          await attendence.save()
          return res.json({status:"success",message:"Time-in Recorded Successfully"})
     }
@@ -30,7 +31,7 @@ const handleAddAttendence = async (req,res)=>{
 
 // VIEW ATTENDENCE
 const handleViewAttendence = (req,res)=>{
-    attendencemodel.find().then(
+    attendencemodel.find().populate("employee","name designation type role").then(
         (response)=>{
             res.json(response)
             console.log(response)
